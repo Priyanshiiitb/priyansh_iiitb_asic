@@ -1,6 +1,7 @@
 # priyansh_iiitb_asic
 ## Day1 [Installation]
 ## YOSYS
+Steps involve in Ubuntu
 ```
 git clone https://github.com/YosysHQ/yosys.git
 cd yosys-master 
