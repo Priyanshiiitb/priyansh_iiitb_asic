@@ -2,7 +2,6 @@
 ## Day1
 ## Installation
 ...
-
 git clone https://github.com/YosysHQ/yosys.git
 cd yosys 
 sudo apt install make (If make is not installed please install it) 
@@ -14,6 +13,7 @@ make config-gcc
 make 
 sudo make install
 ...
+
 ![Screenshot from 2023-07-31 10-01-30](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/e8c1e5b8-70cc-4ece-b397-bb656cf40baa)
 
 
