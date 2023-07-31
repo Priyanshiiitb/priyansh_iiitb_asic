@@ -1,5 +1,5 @@
 # priyansh_iiitb_asic
-##Day1
+## Day1
 ##Installation
 ...
 
@@ -17,14 +17,14 @@ sudo make install
 ![Screenshot from 2023-07-31 10-01-30](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/e8c1e5b8-70cc-4ece-b397-bb656cf40baa)
 
 
-##iVerilog
+## iVerilog
 ##steps
 ...
 sudo apt-get install iverilog
 ...
 ![Screenshot from 2023-07-31 10-01-57](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/8c624e10-1b35-46b0-8fd4-9a9939897254)
 
-##Gtkwave
+## Gtkwave
 ##steps
 ...
 sudo apt-get -y install gtkwave
