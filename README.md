@@ -99,9 +99,45 @@ sudo reboot
 # After reboot
 docker run hello-world
 ```
+
 ![Screenshot from 2023-07-31 21-49-43](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/7b044e62-4e2f-4862-9d19-95525c28d17a)
 
 
+## Day2[Introduction to Verilog RTL design and Synthesis]
+```
+module good_mux (input i0 , input i1 , input sel , output reg y); 
+	always @ (*)
+	begin
+		if(sel)
+		y <= i1;
+		else 
+		y <= i0;
+	end
+endmodule
 
+
+`timescale 1ns / 1ps
+module tb_good_mux;
+// Inputs
+reg i0,i1,sel;
+// Outputs
+wire y;
+  		// Instantiate the Unit Under Test (UUT), name based instantiation
+	good_mux uut (.sel(sel),.i0(i0),.i1(i1),.y(y));
+	//good_mux uut (sel,i0,i1,y);  //order based instantiation
+initial begin
+	$dumpfile("tb_good_mux.vcd");
+	$dumpvars(0,tb_good_mux);
+	// Initialize Inputs
+	sel = 0;
+	i0 = 0;
+	i1 = 0;
+	#300 $finish;
+end
+always #75 sel = ~sel;
+always #10 i0 = ~i0;
+always #55 i1 = ~i1;
+endmodule
+```
 
 
