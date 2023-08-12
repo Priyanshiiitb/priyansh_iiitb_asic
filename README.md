@@ -149,6 +149,14 @@ end module
 ![Screenshot from 2023-08-12 09-48-13](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/e862f54a-7f44-4ca2-b077-a28b9c038c7f)
 
 ## Yosys Synthesizer
+###  flow of Yosys Synthesize
+![166094901-27c70c0d-8ef2-4a34-a4b2-7307af492698](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/ae73847d-1a55-48a1-9f95-b58911faded8)
+
+### Below are the commands to perform above synthesis.
+
+RTL Design - read_verilog |
+.lib - read_liberty  |
+netlist file- write_verilog
 ### How to enter yosys
 ![Screenshot from 2023-08-12 09-53-21](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/4251baf0-dbc2-4ca6-a86a-02a110909c18)
 
