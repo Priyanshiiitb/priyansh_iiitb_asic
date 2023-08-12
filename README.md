@@ -1,11 +1,12 @@
 # priyansh_iiitb_asic
-## Table of Contents
+##  Contents
 - [Week - 1](#week---1)
     * [Day - 1 : Software Installation](#day---1--software-installation)
 - [Week - 2](#week---2)
     * [Day - 1 : Introduction to Verilog RTL Design and Synthesis](#day---1--introduction-to-verilog-rtl-design-and-synthesis)
-## Week - 1       
-## Day - 1 [Software Installation]
+	* [Day - 2 : Timing libs, Hierarchical vs Flat Synthesis and Efficient flop coding styles](#day---2--timing-libs-hierarchical-vs-flat-synthesis-and-efficient-flop-coding-styles)
+## Week - 1 
+## Day - 1 : Software Installation
 
 ## YOSYS
 Steps involve in Ubuntu
@@ -110,7 +111,7 @@ docker run hello-world
 ![Screenshot from 2023-07-31 21-49-43](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/7b044e62-4e2f-4862-9d19-95525c28d17a)
 
 ## Week - 2
-## Day2[Introduction to Verilog RTL design and Synthesis]
+## Day - 1 : Introduction to Verilog RTL Design and Synthesis
 
 ### Here is the code for 2:1MUX and its test bench:
 ```
