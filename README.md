@@ -104,6 +104,8 @@ docker run hello-world
 
 
 ## Day2[Introduction to Verilog RTL design and Synthesis]
+
+### Here is the code for 2:1MUX and its test bench:
 ```
 module good_mux (input i0 , input i1 , input sel , output reg y); 
 	always @ (*)
@@ -137,7 +139,49 @@ end
 always #75 sel = ~sel;
 always #10 i0 = ~i0;
 always #55 i1 = ~i1;
-endmodule
+end module
 ```
+### Following command used
+
+![Screenshot from 2023-08-12 09-47-38](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/7d9d7f0b-2e10-4ada-be4a-d5fa8237d4ac)
+### Below is the gtkwave plot:
+
+![Screenshot from 2023-08-12 09-48-13](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/e862f54a-7f44-4ca2-b077-a28b9c038c7f)
+
+## Yosys Synthesizer
+### How to enter yosys
+![Screenshot from 2023-08-12 09-53-21](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/4251baf0-dbc2-4ca6-a86a-02a110909c18)
+
+```
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> read_verilog good_mux.v 
+yosys> synth -top good_mux 
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+![Screenshot from 2023-08-12 09-53-37](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/cdd3c7c5-db62-49b6-843f-0081361d2a5c)
+![Screenshot from 2023-08-12 09-55-32](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/de028f2c-5382-44fd-b154-004b26941604)
+### Below is the screenshot of synthesized design:
+![Screenshot from 2023-08-12 09-56-24](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/0d80633b-8116-49ba-b3e8-f50202737e0d)
+### Netlist code:
+```
+yosys> write_verilog good_mux_netlist.v 
+yosys> !vim good_mux_netlist.v 
+
+
+```
+![Screenshot from 2023-08-12 10-02-12](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/44689966-ea6d-466c-b8d7-5f98799f4ed5)
+### Simplified netlist code: This code consisits of additional switch. To further simplify, we use below command
+```
+yosys> write_verilog -noattr good_mux_netlist.v
+yosys> !vim good_mux_netlist.v
+
+```
+![Screenshot from 2023-08-12 10-13-49](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/f2edef02-ed58-46d5-b40d-4d98f810cfa4)
+
+
+
+
 
 
