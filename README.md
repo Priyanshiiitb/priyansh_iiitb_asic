@@ -246,4 +246,90 @@ show
 
 ```
 ![submodule_synth](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/34220aa7-10f2-4e2f-944c-3da76371b933)
+### Various Flop coding styles and optimization
+### 1. D flip-flop with Synchronous reset
+A D flip-flop with synchronous reset  combines the functionality of a D flip-flop with the ability to reset its state synchronously. This means that the flip-flop's stored value can be reset to 0 or low state based on a clock signal and a reset input, ensuring that the reset operation occurs when the clock signal transits.
+The verilog code, simulation and synthesis results are shown below:
+```
+module dff_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
+always @ (posedge clk )
+begin
+	if (sync_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+
+
+### 2. D flip-flop with Asynchronous reset
+
+![Screenshot from 2023-08-12 16-41-48](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/691ddf23-ad7d-4f82-8b54-8a30d2e23129)
+
+A D flip-flop with asynchronous reset combines the functionality of a D flip-flop with the ability to reset its state asynchronously. This means that the flip-flop's stored value can be reset to 0 or low state regardless of the clock signal's state.
+The verilog code, simulation and synthesis results are shown below:
+```
+module dff_asyncres ( input clk ,  input async_reset , input d , output reg q );
+always @ (posedge clk , posedge async_reset)
+begin
+	if(async_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+
+
+### 3. D flip-flop with Asynchronous set
+A D flip-flop with asynchronous set combines the functionality of a D flip-flop with the ability to set its state asynchronously. This means that the flip-flop's stored value can be set to 1 or high state regardless of the clock signal's state.
+The verilog code, simulation and synthesis results are shown below:
+
+```
+module dff_async_set ( input clk ,  input async_set , input d , output reg q );
+always @ (posedge clk , posedge async_set)
+begin
+	if(async_set)
+		q <= 1'b1;
+	else	
+		q <= d;
+end
+endmodule
+```
+![Screenshot from 2023-08-12 16-44-07](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/6c7f6f66-94cf-4cf6-b7bd-55a4d024e569)
+
+
+
+
+### 4. D flip-flop with Asynchronous and Synchronous reset
+A D flip-flop with both asynchronous and synchronous reset that combines the features of a D flip-flop with the ability to reset its state using either an asynchronous reset input or a synchronous reset input. This provides flexibility in resetting the flip-flop's state under different conditions.
+
+The verilog code, simulation and synthesis results are shown below:
+
+```
+module dff_asyncres_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
+always @ (posedge clk , posedge async_reset)
+begin
+	if(async_reset)
+		q <= 1'b0;
+	else if (sync_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+### Screenshots
+### asynchronous rest
+
+![Screenshot from 2023-08-12 16-41-48](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/691ddf23-ad7d-4f82-8b54-8a30d2e23129)
+
+### asynchronous set
+
+![Screenshot from 2023-08-12 16-44-07](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/6c7f6f66-94cf-4cf6-b7bd-55a4d024e569)
+
 
