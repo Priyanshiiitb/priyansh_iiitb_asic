@@ -197,9 +197,53 @@ yosys> !vim good_mux_netlist.v
 ![Screenshot from 2023-08-12 10-13-49](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/f2edef02-ed58-46d5-b40d-4d98f810cfa4)
 
 ## Day - 2 : Timing libs, Hierarchical vs Flat Synthesis and Efficient flop coding styles
+### LAB- Introduction to  .lib
 
+**With in the lib file, the gates are delared as follows to meet the variations due to process, temperatures and voltages.**
 
+![Screenshot from 2023-08-12 14-43-04](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/3f4457d1-6c26-4b8a-8c41-fbaba2685692)
+### below image displays the power consumption comparision and size of transistor in increasing order but delay will be opposite of this.
+![Screenshot from 2023-08-12 15-01-17](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/f2563d66-df72-4fc7-b75f-8880ab2eb5aa)
 
+### LAB- Hierarchical synthesis and flat synthesis
+```
 
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+read_verilog 
+read_verilog multiple_modules.v 
+synth -top multiple_modules
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+show multiple_modules
+write_verilog multiple_modules_hier.v
+```
+![Screenshot from 2023-08-12 15-15-45](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/1ffff5b2-57e5-4c26-9b11-93db5c6a5389)
+![netlist_hier](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/3dd03282-8d3b-4bcf-b6f6-6f5d3b0e7c6b)
 
+```
+ yosys
+ read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+ read_verilog 
+ read_verilog multiple_modules.v 
+ synth -top multiple_modules
+ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+ flatten
+ show
+ write_verilog multiple_modules_flat.v
+```
+![flat_des](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/30837c2d-7d31-437b-94d3-f51a250bb35a)
+![netlist_flat](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/def217b5-a002-421f-b3ef-b97e268086b5)
+
+### Steps to synthesis submodule :
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+read_verilog 
+read_verilog multiple_modules.v 
+synth -top sub_module
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+show
+
+```
+![submodule_synth](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/34220aa7-10f2-4e2f-944c-3da76371b933)
 
