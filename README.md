@@ -3,8 +3,12 @@
 - [Week - 1](#week---1)
     * [Day - 1 : Software Installation](#day---1--software-installation)
 - [Week - 2](#week---2)
-    * [Day - 1 : Introduction to Verilog RTL Design and Synthesis](#day---1--introduction-to-verilog-rtl-design-and-synthesis)
-	* [Day - 2 : Timing libs, Hierarchical vs Flat Synthesis and Efficient flop coding styles](#day---2--timing-libs-hierarchical-vs-flat-synthesis-and-efficient-flop-coding-styles)
+    * [Day - 1: Introduction to Verilog RTL Design and Synthesis](#day---1--introduction-to-verilog-rtl-design-and-synthesis)
+	* [Day - 2: Timing libs, Hierarchical vs Flat Synthesis and Efficient flop coding styles](#day---2--timing-libs-hierarchical-vs-flat-synthesis-and-efficient-flop-coding-styles)
+    * [Day - 3: Combinational and sequential optmizations](#day---3--Combinational-and-sequential-optmizations)
+
+
+  
 ## Week - 1 
 ## Day - 1 : Software Installation
 
@@ -330,6 +334,44 @@ endmodule
 
 ### asynchronous set
 
+
 ![Screenshot from 2023-08-12 16-44-07](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/6c7f6f66-94cf-4cf6-b7bd-55a4d024e569)
 
+## Day - 3 : Combinational and sequential optmizations
+### Combinational logic optimization with examples
 
+
+
+Techniques for optimization:
+
+* Constant propagation which is Direct optimizxation technique 
+* Boolean logic optimization using K-map or Quine McKluskey
+### Example 1  
+```
+module opt_check (input a , input b , output y);
+	assign y = a?b:0;
+endmodule
+```
+![Screenshot from 2023-08-12 21-03-57](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/3e86c1f7-bea3-493d-b61c-d4804895023c)
+### Example 2
+```
+module opt_check2 (input a , input b , output y);
+	assign y = a?1:b;
+endmodule
+```
+![Screenshot from 2023-08-12 21-17-41](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/70a90f9c-e309-4c5a-a40c-3b557590e4af)
+
+### Example 3
+```
+module opt_check3 (input a , input b, input c , output y);
+	assign y = a?(c?b:0):0;
+endmodule
+```
+![Screenshot from 2023-08-12 21-21-17](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/9e3a0260-eb72-4a09-93e7-c21f390e25cd)
+### Example 4
+```
+module opt_check4 (input a , input b , input c , output y);
+	assign y = a?(b?(a & c ):c):(!c);
+endmodule
+```
+![Screenshot from 2023-08-12 21-24-53](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/27fe70f7-51ec-45dd-93ee-11f2f4c997c9)
