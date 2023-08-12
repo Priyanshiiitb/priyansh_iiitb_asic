@@ -1,5 +1,12 @@
 # priyansh_iiitb_asic
-## Day1 [Installation]
+## Table of Contents
+- [Week - 1](#week---1)
+    * [Day - 1 : Software Installation](#day---1--software-installation)
+- [Week - 2](#week---2)
+    * [Day - 1 : Introduction to Verilog RTL Design and Synthesis](#day---1--introduction-to-verilog-rtl-design-and-synthesis)
+## Week - 1       
+## Day - 1 [Software Installation]
+
 ## YOSYS
 Steps involve in Ubuntu
 ```
