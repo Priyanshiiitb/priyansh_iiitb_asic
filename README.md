@@ -196,6 +196,8 @@ yosys> !vim good_mux_netlist.v
 ```
 ![Screenshot from 2023-08-12 10-13-49](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/f2edef02-ed58-46d5-b40d-4d98f810cfa4)
 
+## Day - 2 : Timing libs, Hierarchical vs Flat Synthesis and Efficient flop coding styles
+
 
 
 
