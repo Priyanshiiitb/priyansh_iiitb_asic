@@ -109,7 +109,7 @@ docker run hello-world
 
 ![Screenshot from 2023-07-31 21-49-43](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/7b044e62-4e2f-4862-9d19-95525c28d17a)
 
-
+## Week - 2
 ## Day2[Introduction to Verilog RTL design and Synthesis]
 
 ### Here is the code for 2:1MUX and its test bench:
