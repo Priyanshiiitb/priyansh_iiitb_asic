@@ -375,3 +375,122 @@ module opt_check4 (input a , input b , input c , output y);
 endmodule
 ```
 ![Screenshot from 2023-08-12 21-24-53](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/27fe70f7-51ec-45dd-93ee-11f2f4c997c9)
+### Sequential Logic Optimization with examples
+### Example-1
+Here flop will be inferred as the output is not constant.
+```
+module dff_const1(input clk, input reset, output reg q);
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+			q <= 1'b0;
+		else
+			q <= 1'b1;
+	end
+endmodule
+```
+![Screenshot from 2023-08-13 18-09-21](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/659883b5-0e3f-4c33-b9e8-4d5b0c42676b)
+![Screenshot from 2023-08-13 18-09-21](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/ce3c0138-fd8a-4373-9714-217ad95ce067)
+### Example-2
+Here flop will not be inferred as the output is always high.
+```
+module dff_const2(input clk, input reset, output reg q);
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+			q <= 1'b1;
+		else
+			q <= 1'b1;
+	end
+endmodule
+```
+![Screenshot from 2023-08-13 18-10-18](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/56ba9e3d-3514-400c-93ac-1501a0b7a418)
+![Screenshot from 2023-08-13 18-17-20](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/2de66206-4725-4c63-8bf4-b2a1a15eb666)
+### Example 3
+```
+	module dff_const3(input clk, input reset, output reg q);
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b0;
+		end
+		else
+		begin
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+	endmodule
+```
+![Screenshot from 2023-08-13 18-46-49](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/3d1ddf92-98e1-48f8-973e-cd0a72e44e56)
+![Screenshot from 2023-08-13 18-19-15](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/560ecbce-df8e-45f2-a909-ec4aabba5df2)
+### Example 4
+```
+	module dff_const4(input clk, input reset, output reg q);
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b1;
+		end
+	else
+		begin
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+	endmodule
+```
+![Screenshot from 2023-08-13 18-56-00](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/730767a3-61ff-4f6a-ad0b-caa9d1e0d6c8)
+![Screenshot from 2023-08-13 19-22-34](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/9ea60edf-ebb2-440e-bd4b-b25e2da2817c)
+
+### Example 5
+```
+	module dff_const5(input clk, input reset, output reg q);
+	reg q1;
+	always @(posedge clk, posedge reset)
+		begin
+			if(reset)
+			begin
+				q <= 1'b0;
+				q1 <= 1'b0;
+			end
+		else
+			begin
+				q1 <= 1'b1;
+				q <= q1;
+			end
+		end
+	endmodule
+```
+![Screenshot from 2023-08-13 18-57-13](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/21278706-a26e-4deb-82cf-a4dfa7782af2)
+
+![Screenshot from 2023-08-13 20-47-20](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/28715f8e-b642-4ad7-8889-9d179357aa26)
+### Sequential optimisation of unused outputs
+```
+module counter_opt (input clk , input reset , output q);
+	reg [2:0] count;
+	assign q = {count[2:0]==3'b100};
+	always @(posedge clk ,posedge reset)
+	begin
+	if(reset)
+		count <= 3'b000;
+	else
+		count <= count + 1;
+	end
+endmodule
+```
+![Screenshot from 2023-08-13 20-52-57](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/818ba8ac-5810-4d0a-b2e2-dd94620fea6a)
+
+
+
+
+
+
