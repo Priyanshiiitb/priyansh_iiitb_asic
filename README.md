@@ -491,6 +491,114 @@ endmodule
 
 
 
+## Day-4-GLS,blocking vs non-blocking and Synthesis-Simulation mismatch
+
+<details> 
+<summary>GLS, Synthesis-Simulation mismatch and Blocking, Non-blocking statements</summary>
 
 
+### Synthesis Simulation Mismatch
 
+There are three main reasons for Synthesis Simulation Mismatch:<br />
+* Missing sensitivity list in always block
+* Blocking vs Non-Blocking Assignments
+* Non standard Verilog coding
+
+ **Missing sensitivity list in always block:**<br />
+
+If the consider - Example-2, we can see the only **sel** is mentioned in the sensitivity list. During the simulation, the waveforms will resemble a latched output but the simulation of netlist will not infer this as the synthesizer will only look at the statements with in the procedural block and not the sensitivity list.
+
+As the synthesizer doen't look for sensitivity list and it looks only for the statements in procedural block, it infers correct  circuit  and if we simulate the netlist code, there will be a synthesis simulation mismatch.
+
+To avoid the synthesis and simulation mismatch. It is very important to check the behaviour of the circuit first and then match it with the expected output seen in simulation and make sure there are no synthesis and simulation mismatches. This is why we use GLS.
+
+**Blocking vs Non-Blocking Assignments**:
+
+Blocking statements execute the statemetns in the order they are written inside the always block. Non-Blocking statements execute all the RHS and once always block is entered, the values are assigned to LHS. This will give mismatch as sometimes, improper use of blocking statements can create latches. Get to see at Example4 
+</detail>
+
+<details>
+	<summary> Lab- GLS Synth Sim Mismatch </summary>
+
+ **Example-1** There is no mismatch in this example as the netlist simulation and rtl simulation waveform are similar only
+```
+module ternary_operator_mux (input i0 , input i1 , input sel , output y);
+	assign y = sel?i1:i0;
+endmodule
+```
+![Screenshot from 2023-08-14 10-03-41](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/73ec9b93-79c3-4ff5-94ae-b8f7097a614f)
+![Screenshot from 2023-08-14 10-08-43](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/f5db1258-5b46-484c-9e7c-2d4ea62c61fb)
+### Example 2
+```
+module bad_mux (input i0 , input i1 , input sel , output reg y);
+	always @ (sel)
+	begin
+		if(sel)
+			y <= i1;
+		else 
+			y <= i0;
+	end
+endmodule
+```
+![Screenshot from 2023-08-14 10-39-10](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/52438c99-d626-488a-bf86-c1db74acd041)
+### Net Simulation
+![Screenshot from 2023-08-14 10-51-50](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/1d1634a2-ae49-4ce3-8715-49c2439fbc66)
+### MISMATCH
+Here second pic shows the netlist simulation which corrects the bad_mux design which was only changing waveform when sel was triggered while for a mux to work properly it should be sensitivity to all the input signals
+
+### Example 3
+```
+module good_mux (input i0 , input i1 , input sel , output reg y);
+	always @ (*)
+	begin
+		if(sel)
+			y <= i1;
+		else 
+			y <= i0;
+	end
+endmodule
+```
+
+</detail>
+
+
+<details>
+	<summary>Lab- Synthesis simulation mismatch blocking statement</summary>
+
+### Example 4
+```
+module blocking_caveat (input a , input b , input  c, output reg d); 
+reg x;
+always @ (*)
+	begin
+	d = x & c;
+	x = a | b;
+end
+endmodule
+```
+![Screenshot from 2023-08-14 11-11-26](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/dec5d57b-b74d-4b7f-9aed-43e04a7b3d5e)
+### Netlist
+![Screenshot from 2023-08-14 11-19-07](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/303ebd5e-88ea-4f69-9489-2a8f378454c4)
+
+Here second pic show the netlist simulation which shows the proper working of the dut while the first pic shows the improper working of dut as we have used blocking statement here which causes synthesis simulation mismatch which is sorted out by GLS while providing netlist simulation
+
+</detail>
+
+## Acknowledgement
+- Kunal Ghosh, VSD Corp. Pvt. Ltd.
+- Skywater Foundry
+- Alwin Shaju,colleague,IIITB 
+- Kanish R,Colleague,IIIT B
+- Nanditha Rao, Professor, IIITB 
+- Madhav Rao, Professor, IIITB
+- Manikandan,Professor,IIITB
+  
+## Reference 
+
+- https://github.com/YosysHQ/yosys.git
+- https://github.com/The-OpenROAD-Project/OpenSTA.git
+- https://github.com/kunalg123
+- https://www.vsdiat.com
+  
+
+  
