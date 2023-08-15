@@ -1,16 +1,18 @@
 # priyansh_iiitb_asic
-##  Contents
+## Table of Contents
 - [Week - 1](#week---1)
     * [Day - 1 : Software Installation](#day---1--software-installation)
 - [Week - 2](#week---2)
-    * [Day - 1: Introduction to Verilog RTL Design and Synthesis](#day---1--introduction-to-verilog-rtl-design-and-synthesis)
-	* [Day - 2: Timing libs, Hierarchical vs Flat Synthesis and Efficient flop coding styles](#day---2--timing-libs-hierarchical-vs-flat-synthesis-and-efficient-flop-coding-styles)
-    * [Day - 3: Combinational and sequential optmizations](#day---3--Combinational-and-sequential-optmizations)
-
+    * [Day - 1 : Introduction to Verilog RTL Design and Synthesis](#day---1--introduction-to-verilog-rtl-design-and-synthesis)
+	* [Day - 2 : Timing libs, Hierarchical vs Flat Synthesis and Efficient flop coding styles](#day---2--timing-libs-hierarchical-vs-flat-synthesis-and-efficient-flop-coding-styles)
+	* [Day - 3 : Combinational and Sequential Optimisations](#day---3--combinational-and-sequential-optimisations)
+	* [Day - 4 : Gate Level Simulation (GLS), Blocking Vs Non-blocking assignment and Synthesis-Simulation Mismatch](#day---4--gate-level-simulation-gls-blocking-vs-non-blocking-assignment-and-synthesis-simulation-mismatch)
+	* [Day - 5 : If, case, for and for generate](#day---5--if-case-for-and-for-generate)
 
   
 ## Week - 1 
 ## Day - 1 : Software Installation
+
 
 ## YOSYS
 Steps involve in Ubuntu
@@ -113,7 +115,6 @@ docker run hello-world
 ```
 
 ![Screenshot from 2023-07-31 21-49-43](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/7b044e62-4e2f-4862-9d19-95525c28d17a)
-
 ## Week - 2
 ## Day - 1 : Introduction to Verilog RTL Design and Synthesis
 
@@ -337,7 +338,7 @@ endmodule
 
 ![Screenshot from 2023-08-12 16-44-07](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/6c7f6f66-94cf-4cf6-b7bd-55a4d024e569)
 
-## Day - 3 : Combinational and sequential optmizations
+## Day - 3 : Combinational and Sequential Optimisations
 ### Combinational logic optimization with examples
 
 
@@ -491,10 +492,10 @@ endmodule
 
 
 
-## Day-4-GLS,blocking vs non-blocking and Synthesis-Simulation mismatch
+## Day - 4 : Gate Level Simulation (GLS), Blocking Vs Non-blocking assignment and Synthesis-Simulation Mismatch
 
-<details> 
-<summary>GLS, Synthesis-Simulation mismatch and Blocking, Non-blocking statements</summary>
+
+### GLS, Synthesis-Simulation mismatch and Blocking, Non-blocking statements
 
 
 ### Synthesis Simulation Mismatch
@@ -515,10 +516,8 @@ To avoid the synthesis and simulation mismatch. It is very important to check th
 **Blocking vs Non-Blocking Assignments**:
 
 Blocking statements execute the statemetns in the order they are written inside the always block. Non-Blocking statements execute all the RHS and once always block is entered, the values are assigned to LHS. This will give mismatch as sometimes, improper use of blocking statements can create latches. Get to see at Example4 
-</detail>
 
-<details>
-	<summary> Lab- GLS Synth Sim Mismatch </summary>
+ ### Lab- GLS Synth Sim Mismatch 
 
  **Example-1** There is no mismatch in this example as the netlist simulation and rtl simulation waveform are similar only
 ```
@@ -559,11 +558,10 @@ module good_mux (input i0 , input i1 , input sel , output reg y);
 endmodule
 ```
 
-</detail>
 
 
-<details>
-	<summary>Lab- Synthesis simulation mismatch blocking statement</summary>
+
+### Lab- Synthesis simulation mismatch blocking statement
 
 ### Example 4
 ```
@@ -582,7 +580,185 @@ endmodule
 
 Here second pic show the netlist simulation which shows the proper working of the dut while the first pic shows the improper working of dut as we have used blocking statement here which causes synthesis simulation mismatch which is sorted out by GLS while providing netlist simulation
 
-</detail>
+## Day - 5 : If, case, for and for generate
+### Lab- Incomplete IF
+### Example 1
+This incomplete if construct forms a connection between i0 and output y i.e, D-latch with input as i1 and i0 will be the enable for it.
+```
+module incomp_if (input i0 , input i1 , input i2 , output reg y);
+always @ (*)
+begin
+	if(i0)
+		y <= i1;
+end
+endmodule
+```
+![Screenshot from 2023-08-14 22-10-07](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/dffab73a-1036-42a3-ab01-89fc9daa787f)
+![Screenshot from 2023-08-14 22-13-21](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/8508b504-4042-42f8-824b-a577a16f3be7)
+
+### Example 2
+
+The below code is equivalent to two 2:1 mux with i0 and i2 as select lines with i1 and i3 as inputs respectively. Here as well, the output is connected back to input in the form of a latch with an enable input of OR of i0 and i2.
+```
+module incomp_if2 (input i0 , input i1 , input i2 , input i3, output reg y);
+	always @ (*)
+	begin
+		if(i0)
+			y <= i1;
+		else if (i2)
+			y <= i3;
+	end
+endmodule
+
+```
+![Screenshot from 2023-08-14 22-33-18](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/cb6c8a99-ec3e-496e-a35f-7cb3187df6d4)
+![Screenshot from 2023-08-14 22-35-26](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/fbf20119-8743-4461-b18c-99ba46e1ed50)
+
+### Lab- incomplete overlapping Case
+### Example-1
+Thie is an example of incomplete case where other two combinations 10 and 11 were not included. This is infer a latch for the multiplexer and connect i2 and i3 with the output.
+```
+module incomp_case (input i0 , input i1 , input i2 , input [1:0] sel, output reg y);
+	always @ (*)
+	begin
+	case(sel)
+		2'b00 : y = i0;
+		2'b01 : y = i1;
+	endcase
+	end
+endmodule
+```
+![Screenshot from 2023-08-14 22-40-31](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/382e1a5f-1e82-4ea9-9596-23fa5ce1da3e)
+![Screenshot from 2023-08-14 22-43-18](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/1974059e-7eb6-495a-a90a-642cdcc5ba30)
+
+### Example-2- Complete case
+```
+module comp_case (input i0 , input i1 , input i2 , input [1:0] sel, output reg y);
+always @ (*)
+begin
+	case(sel)
+		2'b00 : y = i0;
+		2'b01 : y = i1;
+		default : y = i2;
+	endcase
+end
+endmodule
+```
+![Screenshot from 2023-08-15 09-16-17](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/632601d3-909e-46e1-a1b8-ee0ae9366d49)
+![Screenshot from 2023-08-15 09-18-10](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/97f3f993-ec0e-4b2e-bc95-f0b9edbbb0b5)
+### example-3
+In the below example, y is present in all the case statements and it had particular outut for all cases. There no latch is inferred in case of y. When it comes to x, it is not assigned for the input 01, therefore a latch is inferred here.
+```
+module partial_case_assign (input i0 , input i1 , input i2 , input [1:0] sel, output reg y , output reg x);
+always @ (*)
+begin
+	case(sel)
+		2'b00 : begin
+			y = i0;
+			x = i2;
+			end
+		2'b01 : y = i1;
+		default : begin
+	         	  x = i1;
+			  y = i2;
+		 	 end
+	endcase
+end
+endmodule
+```
+![Screenshot from 2023-08-15 09-24-25](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/a77087c6-b78d-4290-9873-a9b24d288451)
+
+### For Loop and For Generate
+
+
+
+**For Loop**<br />
+- For look is used in always block
+- It is used for excecuting expressions alone
+
+**Generate For loop**<br />
+- Generate for loop is used for instantaing hardware
+- It should be used only outside always block
+
+For loop can be used to generate larger circuits like 256:1 multiplexer or 1-256 demultiplexer where the coding style of smaller mux is not feesible and can have human errors since we would need to include huge number of combinations.
+
+FOR Generate can be used to instantiate any number of sub modules with in a top module. For example, if we need a 32 bit ripple carry adder, instead of instantiating 32 full adders, we can write a generate for loop and connect the full adders appropriately.
+
+
+### Lab- For and For Generate
+### Example-1- Mux using generate
+Here for loop is used to design a 4:1 mux. This can also be written using case or if else block, however, for a large size mux, only for loop model is feasible.
+```
+module mux_generate (input i0 , input i1, input i2 , input i3 , input [1:0] sel  , output reg y);
+	wire [3:0] i_int;
+	assign i_int = {i3,i2,i1,i0};
+	integer k;
+always @ (*)
+	begin
+	for(k = 0; k < 4; k=k+1) begin
+		if(k == sel)
+		y = i_int[k];
+		end
+	end
+endmodule
+```
+![Screenshot from 2023-08-15 09-39-50](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/ada36d49-2cca-4039-a650-966adf32a09e)
+![Screenshot from 2023-08-15 09-50-28](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/05c672d9-5bcf-479c-9a7d-884e1136e11e)
+### Example-2-Demux using Case
+```
+module demux_case (output o0 , output o1, output o2 , output o3, output o4, output o5, output o6 , output o7 , input [2:0] sel  , input i);
+reg [7:0]y_int;
+assign {o7,o6,o5,o4,o3,o2,o1,o0} = y_int;
+integer k;
+always @ (*)
+begin
+y_int = 8'b0;
+case(sel)
+	3'b000 : y_int[0] = i;
+	3'b001 : y_int[1] = i;
+	3'b010 : y_int[2] = i;
+	3'b011 : y_int[3] = i;
+	3'b100 : y_int[4] = i;
+	3'b101 : y_int[5] = i;
+	3'b110 : y_int[6] = i;
+	3'b111 : y_int[7] = i;
+endcase
+end
+end module
+```
+![Screenshot from 2023-08-15 09-53-47](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/6450d7d6-a8bf-403a-a7f9-27ab7ed37c47)
+![Screenshot from 2023-08-15 09-55-52](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/5c816f5b-b8d6-48ea-9bac-45185304c7c7)
+
+
+
+### Example-3-Demux using Generate
+
+The code in above example is big and also there is a chance of human error wile writing the code. However, using for loop as shown below, this drawback can be elimiated to a great extent.
+```
+module demux_generate (output o0 , output o1, output o2 , output o3, output o4, output o5, output o6 , output o7 , input [2:0] sel  , input i);
+reg [7:0]y_int;
+assign {o7,o6,o5,o4,o3,o2,o1,o0} = y_int;
+integer k;
+always @ (*)
+begin
+	y_int = 8'b0;
+	for(k = 0; k < 8; k++) begin
+		if(k == sel)
+		y_int[k] = i;
+	end
+end
+endmodule
+
+```
+![Screenshot from 2023-08-15 10-02-54](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/aaaa0883-6e26-46a0-9545-7148ec978dbf)
+![Screenshot from 2023-08-15 10-05-14](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/d7143c83-b91f-4752-8341-7d3e45ea3585)
+### Netlist simulation
+![Screenshot from 2023-08-15 10-07-05](https://github.com/Priyanshiiitb/priyansh_iiitb_asic/assets/140998626/dbe0176d-a07c-435d-8eb4-cb2f68278f4d)
+
+
+
+
+
 
 ## Acknowledgement
 - Kunal Ghosh, VSD Corp. Pvt. Ltd.
